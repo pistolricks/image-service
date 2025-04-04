@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func ConvertImage(w http.ResponseWriter, req *http.Request) {
+func convertImage(w http.ResponseWriter, req *http.Request) {
 	body, err := getRequestBody(req)
 	if err != nil {
 		sendErrorMessage(w, http.StatusBadRequest, err)
