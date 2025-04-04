@@ -23,7 +23,7 @@ func convertImage(w http.ResponseWriter, req *http.Request) {
 	}
 	w.Header().Add("Content-Type", "image/"+resp.ContentType)
 	w.Header().Set("Content-Disposition", "filename="+resp.FileName)
-	w.WriteHeader(http.StatusOK)
+	// w.WriteHeader(http.StatusOK)
 	http.ServeContent(w, req, resp.FileName, time.Now(), bytes.NewReader(resp.File))
 	return
 }
