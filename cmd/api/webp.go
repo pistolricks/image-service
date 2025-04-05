@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/go-playground/validator/v10"
-	"github.com/pistolricks/image-service/internal/models"
+	"github.com/pistolricks/image-service/internal/api"
 	"net/http"
 	"strconv"
 	"time"
@@ -16,7 +16,7 @@ func convertImage(w http.ResponseWriter, req *http.Request) {
 		sendErrorMessage(w, http.StatusBadRequest, err)
 		return
 	}
-	resp, err := models.ConvertImage(body)
+	resp, err := api.ConvertImage(body)
 	if err != nil {
 		sendErrorMessage(w, http.StatusBadRequest, err)
 		return
@@ -28,9 +28,9 @@ func convertImage(w http.ResponseWriter, req *http.Request) {
 	return
 }
 
-func getRequestBody(req *http.Request) (*models.RequestBody, error) {
+func getRequestBody(req *http.Request) (*api.RequestBody, error) {
 	v := validator.New()
-	requestBody := &models.RequestBody{}
+	requestBody := &api.RequestBody{}
 	file, handler, err := req.FormFile("file")
 	if err != nil {
 		return nil, err
