@@ -6,19 +6,23 @@ import (
 	"github.com/cloudflare/cloudflare-go/v4"
 	"github.com/cloudflare/cloudflare-go/v4/images"
 	"github.com/cloudflare/cloudflare-go/v4/option"
+	"os"
 )
 
 func DeleteImage(id string) (*interface{}, error) {
+	apiKey := os.Getenv("CLOUDFLARE_IMAGES_KEY")
+	apiEmail := os.Getenv("VITE_IMAGE_EMAIL")
+	apiAccount := os.Getenv("VITE_CLOUDFLARE_IMAGES_ACCOUNT")
 
 	client := cloudflare.NewClient(
-		option.WithAPIKey("0baf9ebe3f4276c6ca0c878d2611818fbd8ac"), // defaults to os.LookupEnv("CLOUDFLARE_API_KEY")
-		option.WithAPIEmail("erikwsmith1982@gmail.com"),            // defaults to os.LookupEnv("CLOUDFLARE_EMAIL")
+		option.WithAPIKey(apiKey),     // defaults to os.LookupEnv("CLOUDFLARE_API_KEY")
+		option.WithAPIEmail(apiEmail), // defaults to os.LookupEnv("CLOUDFLARE_EMAIL")
 	)
 	v1, err := client.Images.V1.Delete(
 		context.TODO(),
 		id,
 		images.V1DeleteParams{
-			AccountID: cloudflare.F("1d255d4f4a8aa1ef689a5286f80516cc"),
+			AccountID: cloudflare.F(apiAccount),
 		},
 	)
 	if err != nil {
